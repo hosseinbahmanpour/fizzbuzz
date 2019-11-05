@@ -1,4 +1,3 @@
-com/oneio/fizzbuzz/model/FizzBuzz.class
 com/oneio/fizzbuzz/constants/FizzBuzzConstants.class
 com/oneio/fizzbuzz/FizzBuzzApplication.class
 com/oneio/fizzbuzz/controller/HomeController.class

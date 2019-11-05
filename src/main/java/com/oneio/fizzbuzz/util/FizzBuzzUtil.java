@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class FizzBuzzUtil {
 
-	public String fizzBuzz(String stringToFizzBuzz) {
+	public static String fizzBuzz(String stringToFizzBuzz) {
 		String fizzBuzzedString = "";
 		ArrayList<Integer> integers = fizzBuzzHelper(stringToFizzBuzz);
 		for (Integer integer : integers) {
@@ -22,7 +22,7 @@ public class FizzBuzzUtil {
 		return fizzBuzzedString;
 	}
 
-	private ArrayList<Integer> fizzBuzzHelper(String request) {
+	private static ArrayList<Integer> fizzBuzzHelper(String request) {
 		String[] numbers = request.split(";");
 		ArrayList<Integer> response = new ArrayList<Integer>();
 		for (String number : numbers) {
