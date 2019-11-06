@@ -6,9 +6,7 @@ FizzBuzz Game created with Spring Initializr and Eclipse IDE
 
 STEP 1: RUNNING THE APPLICATION
 
- - Download the executable JAR file found in the GitHub repository
-   folder "target".    
- - The file is called fizzbuzz-0.0.1-SNAPSHOT.jar. 
+ - Download the executable JAR file called fizzbuzz-0.0.1-SNAPSHOT.jar. 
  - Open terminal/cmdprompt and navigate to directory of JAR file. 
  - Type the following command: java -jar fizzbuzz-0.0.1-SNAPSHOT.jar
  - The application will boot.
