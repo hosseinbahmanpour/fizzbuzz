@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.oneio.fizzbuzz.constants.FizzBuzzConstants;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(FizzBuzzController.class)
 class FizzBuzzControllerTest {
@@ -67,7 +69,6 @@ class FizzBuzzControllerTest {
 	public void testError() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.post("/fizzbuzz?content=a").accept(MediaType.ALL_VALUE))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("Error processing request. For input string: \"a\"")));
+				.andExpect(content().string(equalTo(FizzBuzzConstants.requestError + "For input string: \"a\"")));
 	}
-
 }
