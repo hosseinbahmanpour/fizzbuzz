@@ -26,10 +26,4 @@ public class FizzBuzzController {
 			return new RedirectView("index");
 		}
 	}
-
-	@GetMapping("fizzbuzz")
-	@ResponseBody
-	public String fizzBuzzGet(@RequestParam String content) {
-		return content;
-	}
 }
