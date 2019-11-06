@@ -18,8 +18,8 @@ public class FizzBuzzController {
 	@RequestMapping(value = "fizzbuzz", method = RequestMethod.POST)
 	public RedirectView fizzBuzzPost(@RequestParam String content, RedirectAttributes attributes) {
 		try {
-			attributes.addAttribute("content", FizzBuzzUtil.calculateFizzBuzz(content));
-			return new RedirectView("fizzbuzz");
+			attributes.addFlashAttribute("content", FizzBuzzUtil.calculateFizzBuzz(content));
+			return new RedirectView("index");
 		} catch (Exception e) {
 			attributes.addFlashAttribute("error", FizzBuzzConstants.requestErrorMessage + e.getMessage());
 			attributes.addFlashAttribute("retry", FizzBuzzConstants.requestRetry);
