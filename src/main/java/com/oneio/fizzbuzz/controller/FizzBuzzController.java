@@ -14,9 +14,9 @@ public class FizzBuzzController {
 	@RequestMapping(value = "fizzbuzz", method = RequestMethod.POST)
 	public String fizzBuzz(@RequestParam String content) {
 		try {
-			return FizzBuzzUtil.fizzBuzz(content);
+			return FizzBuzzUtil.calculateFizzBuzz(content);
 		} catch (Exception e) {
-			return FizzBuzzConstants.requestError + e.getMessage();
+			return FizzBuzzConstants.requestErrorMessage + e.getMessage();
 		}
 	}
 }

@@ -4,27 +4,28 @@ import java.util.ArrayList;
 
 public class FizzBuzzUtil {
 
-	public static String fizzBuzz(String stringToFizzBuzz) {
-		String fizzBuzzedString = "";
-		ArrayList<Integer> integers = fizzBuzzHelper(stringToFizzBuzz);
+	public static String calculateFizzBuzz(String request) {
+		StringBuilder responseBuilder = new StringBuilder();
+		ArrayList<Integer> integers = splitToIntegers(request);
 		for (Integer integer : integers) {
-			if (integer.intValue() % 3 == 0 && integer.intValue() % 5 == 0) {
-				fizzBuzzedString = fizzBuzzedString + "FizzBuzz";
-			} else if (integer.intValue() % 3 == 0) {
-				fizzBuzzedString = fizzBuzzedString + "Fizz";
-			} else if (integer.intValue() % 5 == 0) {
-				fizzBuzzedString = fizzBuzzedString + "Buzz";
+			int i = (int) integer;
+			if (i % 3 == 0 && i % 5 == 0) {
+				responseBuilder.append("FizzBuzz");
+			} else if (i % 3 == 0) {
+				responseBuilder.append("Fizz");
+			} else if (i % 5 == 0) {
+				responseBuilder.append("Buzz");
 			} else {
-				fizzBuzzedString = fizzBuzzedString + integer;
+				responseBuilder.append(i);
 			}
-			fizzBuzzedString = fizzBuzzedString + ";";
+			responseBuilder.append(";");
 		}
-		return fizzBuzzedString;
+		return responseBuilder.toString().substring(0, responseBuilder.toString().length() - 1);
 	}
 
-	private static ArrayList<Integer> fizzBuzzHelper(String request) {
+	private static ArrayList<Integer> splitToIntegers(String request) {
 		String[] numbers = request.split(";");
-		ArrayList<Integer> response = new ArrayList<Integer>();
+		ArrayList<Integer> response = new ArrayList<>();
 		for (String number : numbers) {
 			response.add(Integer.parseInt(number));
 		}

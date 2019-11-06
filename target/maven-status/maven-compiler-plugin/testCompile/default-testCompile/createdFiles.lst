@@ -1,2 +1,3 @@
 com/oneio/fizzbuzz/controller/FizzBuzzControllerTest.class
+com/oneio/fizzbuzz/constants/FizzBuzzTestingConstants.class
 com/oneio/fizzbuzz/util/FizzBuzzUtilTest.class
