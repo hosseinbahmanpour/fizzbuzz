@@ -16,7 +16,7 @@ public class FizzBuzzController {
 		try {
 			return FizzBuzzUtil.fizzBuzz(content);
 		} catch (Exception e) {
-			return FizzBuzzConstants.fizzBuzzRequestError(e);
+			return FizzBuzzConstants.requestError + e.getMessage();
 		}
 	}
 }
