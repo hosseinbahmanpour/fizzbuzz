@@ -25,26 +25,25 @@ class FizzBuzzControllerTest {
 	private MockMvc mvc;
 
 	private static final String url = "/fizzbuzz?content=";
-	private static final String redirectUrL = "fizzbuzz?content=";
 
 	@Test
 	public void testNumber() throws Exception {
 		String request = "1";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
-}
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+	}
 
 	@Test
 	public void testFizz() throws Exception {
 		String request = "3";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
 	}
 
 	@Test
@@ -52,9 +51,9 @@ class FizzBuzzControllerTest {
 		String request = "5";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
 	}
 
 	@Test
@@ -62,9 +61,9 @@ class FizzBuzzControllerTest {
 		String request = "6";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
 	}
 
 	@Test
@@ -72,9 +71,9 @@ class FizzBuzzControllerTest {
 		String request = "10";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
 	}
 
 	@Test
@@ -82,9 +81,9 @@ class FizzBuzzControllerTest {
 		String request = "15";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
 	}
 
 	@Test
@@ -92,9 +91,9 @@ class FizzBuzzControllerTest {
 		String request = FizzBuzzTestingConstants.complexRequest;
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
 		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
-		.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
-		.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
-		.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse));
 	}
 
 	@Test
