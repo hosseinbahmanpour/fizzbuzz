@@ -11,6 +11,8 @@
 		numbers using semicolons. <br>When ready press the FizzBuzz
 		button.
 	</p>
+	<p style="color: red;" th:text="${error}"></p>
+	<p style="color: red;" th:text="${retry}"></p>
 	<form th:action="@{/fizzbuzz}" method="post">
 		<input type="text" placeholder="Example input: 1;2;3;" name="content" />
 		<input type="submit" value="FizzBuzz!" />

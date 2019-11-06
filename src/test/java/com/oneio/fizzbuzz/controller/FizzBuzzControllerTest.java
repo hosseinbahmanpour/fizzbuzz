@@ -2,6 +2,7 @@ package com.oneio.fizzbuzz.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.oneio.fizzbuzz.constants.FizzBuzzConstants;
 import com.oneio.fizzbuzz.constants.FizzBuzzTestingConstants;
@@ -25,74 +27,132 @@ class FizzBuzzControllerTest {
 	private MockMvc mvc;
 
 	private static final String url = "/fizzbuzz?content=";
+	private static final String redirectUrL = "fizzbuzz?content=";
 
 	@Test
 	public void testNumber() throws Exception {
 		String request = "1";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse;
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testFizz() throws Exception {
 		String request = "3";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse;
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testBuzz() throws Exception {
 		String request = "5";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse;
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testFizzMultiple() throws Exception {
 		String request = "6";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse;
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testBuzzMultiple() throws Exception {
 		String request = "10";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse;
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testFizzBuzz() throws Exception {
 		String request = "15";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse;
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testComplex() throws Exception {
 		String request = FizzBuzzTestingConstants.complexRequest;
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
+		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
+		String expectedRedirectUrl = redirectUrL + expectedResponse.replaceAll(";", "%3B");
+
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl(expectedRedirectUrl));
+
+		mvc.perform(MockMvcRequestBuilders.get(url + expectedResponse).accept(MediaType.ALL_VALUE))
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(expectedResponse)));
 	}
 
 	@Test
 	public void testError() throws Exception {
 		String request = "a";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzConstants.requestErrorMessage + "For input string: \"a\"")));
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("error"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("error",
+						FizzBuzzConstants.requestErrorMessage + "For input string: \"a\""))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("retry"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetry));
 	}
 
 	@Test
 	public void testComplexError() throws Exception {
 		String request = "1;2;3;b;5";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzConstants.requestErrorMessage + "For input string: \"b\"")));
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("error"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("error",
+						FizzBuzzConstants.requestErrorMessage + "For input string: \"b\""))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("retry"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetry));
 	}
-	
+
 	@Test
 	public void testEmptyResponse() throws Exception {
 		String request = "";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzConstants.requestErrorMessage + "For input string: \"\"")));
+		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("error"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("error",
+						FizzBuzzConstants.requestErrorMessage + "For input string: \"\""))
+				.andExpect(MockMvcResultMatchers.flash().attributeExists("retry"))
+				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetry));
 	}
 }
