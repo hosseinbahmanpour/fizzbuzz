@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" name="viewport"
+	content="width=device-width, initial-scale=1">
 <title>ONEiO FizzBuzz Game</title>
 </head>
+<style>
+.content {
+	max-width: 500px;
+	background: white;
+	margin: auto;
+}
+
+.box {
+	width: 500px;
+	height: 82px;
+	border: 1px solid #000;
+}
+
+a {
+	font-size: 16px;
+}
+</style>
 <body>
-	<h1>Welcome to the ONEiO FizzBuzz Game!</h1>
-	<p>
-		<br>Please enter your number(s) below. <br>Separate the
-		numbers using semicolons. <br>When ready press the FizzBuzz
-		button.
-	</p>
-	<p style="color: red;" th:text="${error}"></p>
-	<p style="color: red;" th:text="${retry}"></p>
-	<form th:action="@{/fizzbuzz}" method="post">
-		<input type="text" placeholder="Example input: 1;2;3;" name="content" />
-		<input type="submit" value="FizzBuzz!" />
-	</form>
-	<p style="color: green;" th:text="${content}">
+	<div class=content align="center">
+		<h3>Welcome to the ONEiO FizzBuzz Game!</h3>
+		<p>
+			Please enter your number(s) below. <br>Separate the numbers
+			using semicolons. <br>When ready press the FizzBuzz button.
+		</p>
+		<a
+			href="https://github.com/hosseinbahmanpour/fizzbuzz/blob/master/README.md">Instructions
+			on how to send direct HTTP requests and bypass UI</a>
+		<p></p>
+		<form th:action="@{/fizzbuzz}" method="post">
+			<input type="text" placeholder="Example input: 1;2;3;" name="content" />
+			<input type="submit" value="FizzBuzz!" />
+		</form>
+		<br>
+		<div th:if="${link != null || error != null}" class=box>
+			<p style="color: red;" th:text="${error}"></p>
+			<p style="color: red;" th:text="${retry}"></p>
+			<p style="color: green;" th:text="${content}"></p>
+			<div th:if="${link != null}">
+				<a th:href="${link}" style="color: green">Follow this link to
+					view plain text response</a>
+			</div>
+			<p></p>
+			<button onclick="window.location = '/'">Refresh</button>
+		</div>
+	</div>
 </body>
 </html>

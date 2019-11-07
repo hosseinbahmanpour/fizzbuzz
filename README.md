@@ -17,12 +17,19 @@ Can be used with the User Interface at localhost:8080 on any browser (follow on 
 
 OR
 
- - Send an http POST request (you can use Postman application on Chrome for example) as follows: 
+ - Make direct Get or Post requests with something like Postman
  - url = localhost:8080/fizzbuzz
  - Parameters key and value pair where:
  - key='content' and value='{number(s) separated by a semicolon}'
- - EXAMPLE POST REQUEST: key='content' AND value='1;2;3;5;10;15;'
+ - EXAMPLE GET REQUEST: key='content' AND value='1;2;3;5;10;15;'
+
+OR Simplest alternative
+
+ - You can try the Get request on your browser just by typing url
+ - For example type localhost:8080/fizzbuzz?content=1;3;5;8;15 in Chrome and press enter
 
 STEP 3: RESULT
 
-The http api will return a plain text response where numbers and words are separated by a semicolon.
+The UI will display the FizzBuzzed string, numbers and words separated by a semicolon. A link wil be provided to the plain text response as well. On errors, error messages received and user can make new input.
+
+Making direct Post requests will result in an html response. Making a direct Get request will result in plain text response.
