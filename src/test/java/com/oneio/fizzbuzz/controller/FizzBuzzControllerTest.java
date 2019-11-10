@@ -27,91 +27,92 @@ class FizzBuzzControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
-	private static final String url = "/fizzbuzz?content=";
-	private static final String urlNoDash = "fizzbuzz?content=";
+	private static final String requestUrl = "/" + FizzBuzzConstants.fizzBuzzContentUrl;
+	private static final String linkUrl = FizzBuzzConstants.fizzBuzzContentUrl;
 
 	@Test
 	public void testNumberGet() throws Exception {
 		String request = "1";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testFizzGet() throws Exception {
 		String request = "3";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testBuzzGet() throws Exception {
 		String request = "5";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testFizzMultipleGet() throws Exception {
 		String request = "6";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testBuzzMultipleGet() throws Exception {
 		String request = "10";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testFizzBuzzGet() throws Exception {
 		String request = "15";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testComplexGet() throws Exception {
 		String request = FizzBuzzTestingConstants.complexRequest;
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(FizzBuzzUtil.calculateFizzBuzz(request))));
 	}
 
 	@Test
 	public void testErrorGet() throws Exception {
 		String request = "a";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(
-						content().string(equalTo(FizzBuzzConstants.requestErrorMessage + "For input string: \"a\"")));
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is4xxClientError())
+				.andExpect(content().string(equalTo(FizzBuzzTestingConstants.exceptionMessagePrelude + "\"a\"")));
 	}
 
 	@Test
 	public void testComplexErrorGet() throws Exception {
 		String request = "1;2;3;b;5";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(
-						content().string(equalTo(FizzBuzzConstants.requestErrorMessage + "For input string: \"b\"")));
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is4xxClientError())
+				.andExpect(content().string(equalTo(FizzBuzzTestingConstants.exceptionMessagePrelude + "\"b\"")));
 	}
 
 	@Test
 	public void testEmptyResponseGet() throws Exception {
 		String request = "";
-		mvc.perform(MockMvcRequestBuilders.get(url + request).accept(MediaType.ALL_VALUE)).andExpect(status().isOk())
-				.andExpect(content().string(equalTo(FizzBuzzConstants.requestErrorMessage + "For input string: \"\"")));
+		mvc.perform(MockMvcRequestBuilders.get(requestUrl + request).accept(MediaType.ALL_VALUE))
+				.andExpect(status().is4xxClientError())
+				.andExpect(content().string(equalTo(FizzBuzzTestingConstants.exceptionMessagePrelude + "\"\"")));
 	}
 
 	@Test
 	public void testNumberPost() throws Exception {
 		String request = "1";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -120,12 +121,12 @@ class FizzBuzzControllerTest {
 	public void testFizzPost() throws Exception {
 		String request = "3";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -134,12 +135,12 @@ class FizzBuzzControllerTest {
 	public void testBuzzPost() throws Exception {
 		String request = "5";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -148,12 +149,12 @@ class FizzBuzzControllerTest {
 	public void testFizzMultiplePost() throws Exception {
 		String request = "6";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -162,12 +163,12 @@ class FizzBuzzControllerTest {
 	public void testBuzzMultiplePost() throws Exception {
 		String request = "10";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -176,12 +177,12 @@ class FizzBuzzControllerTest {
 	public void testFizzBuzzPost() throws Exception {
 		String request = "15";
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -190,12 +191,12 @@ class FizzBuzzControllerTest {
 	public void testComplexPost() throws Exception {
 		String request = FizzBuzzTestingConstants.complexRequest;
 		String expectedResponse = FizzBuzzUtil.calculateFizzBuzz(request);
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("content"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", expectedResponse))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("link"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("link", urlNoDash + request))
+				.andExpect(MockMvcResultMatchers.flash().attribute("link", linkUrl + request))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("retry", nullValue()));
 	}
@@ -203,13 +204,13 @@ class FizzBuzzControllerTest {
 	@Test
 	public void testErrorPost() throws Exception {
 		String request = "a";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("error"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error",
-						FizzBuzzConstants.requestErrorMessage + "For input string: \"a\""))
+						FizzBuzzTestingConstants.exceptionMessagePrelude + "\"a\""))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("retry"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetry))
+				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetryMessage))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("link", nullValue()));
 	}
@@ -217,13 +218,13 @@ class FizzBuzzControllerTest {
 	@Test
 	public void testComplexErrorPost() throws Exception {
 		String request = "1;2;3;b;5";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("error"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error",
-						FizzBuzzConstants.requestErrorMessage + "For input string: \"b\""))
+						FizzBuzzTestingConstants.exceptionMessagePrelude + "\"b\""))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("retry"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetry))
+				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetryMessage))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("link", nullValue()));
 	}
@@ -231,13 +232,13 @@ class FizzBuzzControllerTest {
 	@Test
 	public void testEmptyResponsePost() throws Exception {
 		String request = "";
-		mvc.perform(MockMvcRequestBuilders.post(url + request).accept(MediaType.ALL_VALUE))
+		mvc.perform(MockMvcRequestBuilders.post(requestUrl + request).accept(MediaType.ALL_VALUE))
 				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("index"))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("error"))
 				.andExpect(MockMvcResultMatchers.flash().attribute("error",
-						FizzBuzzConstants.requestErrorMessage + "For input string: \"\""))
+						FizzBuzzTestingConstants.exceptionMessagePrelude + "\"\""))
 				.andExpect(MockMvcResultMatchers.flash().attributeExists("retry"))
-				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetry))
+				.andExpect(MockMvcResultMatchers.flash().attribute("retry", FizzBuzzConstants.requestRetryMessage))
 				.andExpect(MockMvcResultMatchers.flash().attribute("content", nullValue()))
 				.andExpect(MockMvcResultMatchers.flash().attribute("link", nullValue()));
 	}

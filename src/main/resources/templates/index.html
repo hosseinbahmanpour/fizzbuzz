@@ -4,24 +4,8 @@
 <meta charset="UTF-8" name="viewport"
 	content="width=device-width, initial-scale=1">
 <title>ONEiO FizzBuzz Game</title>
+<link href="../static/StyleSheet.css" rel="stylesheet" type="text/css">
 </head>
-<style>
-.content {
-	max-width: 500px;
-	background: white;
-	margin: auto;
-}
-
-.box {
-	width: 500px;
-	height: 82px;
-	border: 1px solid #000;
-}
-
-a {
-	font-size: 16px;
-}
-</style>
 <body>
 	<div class=content align="center">
 		<h3>Welcome to the ONEiO FizzBuzz Game!</h3>
@@ -38,7 +22,8 @@ a {
 			<input type="submit" value="FizzBuzz!" />
 		</form>
 		<br>
-		<div th:if="${link != null || error != null}" class=box>
+		<div th:if="${link != null || error != null}"
+			style="width: 500px; height: 82px; border: 1px solid #000;">
 			<p style="color: red;" th:text="${error}"></p>
 			<p style="color: red;" th:text="${retry}"></p>
 			<p style="color: green;" th:text="${content}"></p>

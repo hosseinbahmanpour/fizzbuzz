@@ -1,6 +1,6 @@
 package com.oneio.fizzbuzz.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,27 +18,32 @@ import com.oneio.fizzbuzz.util.FizzBuzzUtil;
 @RequestMapping("fizzbuzz")
 public class FizzBuzzController {
 
-	@PostMapping()
-	public RedirectView fizzBuzz(@RequestParam String content, RedirectAttributes attributes,
-			HttpServletRequest request) {
+	@PostMapping
+	public RedirectView fizzBuzz(@RequestParam String content, RedirectAttributes attributes) {
 		try {
 			attributes.addFlashAttribute("content", FizzBuzzUtil.calculateFizzBuzz(content));
-			attributes.addFlashAttribute("link", "fizzbuzz?content=" + content);
+			attributes.addFlashAttribute("link", FizzBuzzConstants.fizzBuzzContentUrl + content);
 			return new RedirectView("index");
 		} catch (Exception e) {
 			attributes.addFlashAttribute("error", FizzBuzzConstants.requestErrorMessage + e.getMessage());
-			attributes.addFlashAttribute("retry", FizzBuzzConstants.requestRetry);
+			attributes.addFlashAttribute("retry", FizzBuzzConstants.requestRetryMessage);
 			return new RedirectView("index");
 		}
 	}
 
-	@GetMapping()
-	@ResponseBody()
-	public String fizzBuzz(@RequestParam String content) {
+	@GetMapping
+	@ResponseBody
+	public String fizzBuzz(@RequestParam String content, HttpServletResponse httpResponse) {
 		try {
 			return FizzBuzzUtil.calculateFizzBuzz(content);
 		} catch (Exception e) {
+			httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return FizzBuzzConstants.requestErrorMessage + e.getMessage();
 		}
+	}
+
+	@GetMapping("*")
+	public String fizzBuzz() {
+		return "redirect:/index";
 	}
 }

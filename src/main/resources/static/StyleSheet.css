@@ -1,0 +1,9 @@
+.content {
+	max-width: 500px;
+	background: white;
+	margin: auto;
+}
+
+a {
+	font-size: 16px;
+}
